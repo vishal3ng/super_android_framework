@@ -31,7 +31,8 @@ def drivers(request):
     desired_capabilities = {
         "platformName": "Android",
         "platformVersion": "14",
-        "deviceName": "493a3b7d",
+        # "deviceName": "493a3b7d",
+        "DeviceID":"192.168.1.101:5555",
         "appPackage": "com.icicidirect.idirectsuper",
         "appActivity": "com.icicidirect.idirectsuper.MainActivity",
         "automationName": "UiAutomator2"

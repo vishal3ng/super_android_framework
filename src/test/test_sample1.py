@@ -10,7 +10,6 @@ from src.page.all_pages import basepage
 class Test_equity(basepage):
 
     def test_first1(self):
-        # self.driver.get("https://github.com/lokesh771988/Appium_python")
         self.objloginpage.login()
         time.sleep(12)
 
