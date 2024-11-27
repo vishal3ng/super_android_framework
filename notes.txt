@@ -1,0 +1,13 @@
+
+adb shell getprop ro.build.version.release  >>>> 14
+This lists all properties for the connected device, such as:
+
+ro.product.model - Device model
+ro.product.manufacturer - Manufacturer
+ro.build.version.release - Android version
+ro.build.version.sdk - SDK version
+ro.serialno - Serial number
+
+
+adb uninstall io.appium.uiautomator2.server   # for stock-code hang up error
+adb uninstall io.appium.uiautomator2.server.test

@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 
+import allure
 from appium.webdriver.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 import logging
@@ -54,16 +55,22 @@ class Common_file:
         self.driver:WebDriver=driver
         self.wait=we(driver,40)
 
-    def click_on(self,xpath,name=None):
-        self.driver.find_element(By.XPATH,xpath).click()
-        time.sleep(1)
+    def click_on(self,xpath,element_name=None):
+        result = False
+        try:
+            self.driver.find_element(By.XPATH, xpath).click()
+            result = True
+            self.allureStep(f" Click on {element_name}")
+        except Exception as e:
+            self.allureStep(f"Unable to click on {element_name} {xpath} ")
+            assert False, f" unable to click on {element_name} {xpath}"
+        return result
 
-        print("from common click")
-
-    def setValue(self, xpath, value):
+    def setValue(self, xpath,element_name, value):
+        result=False
         try:
             time.sleep(1)
-            webel = self.driver.find_element(By.XPATH, xpath).click()
+            self.click_on(xpath,element_name)
             time.sleep(0.4)
             self.driver.find_element(By.XPATH, xpath).clear()
             time.sleep(0.4)
@@ -71,9 +78,10 @@ class Common_file:
             if self.driver.is_keyboard_shown():
                 self.driver.hide_keyboard()
             time.sleep(3)
-
+            result=True
         except Exception as e:
-            print(f"found error msg {str(e)}")
+            self.allureStep(f" Unable to click and fill text at {element_name} {xpath} with value {value} error msg {e}")
+        return result
 
     def get_webelemet(self, xpath):
         global wel
@@ -93,3 +101,18 @@ class Common_file:
         # print(f"{text_ofele} text from get text ")
         return text_ofele
 
+    @allure.step("Back to previous page")
+    def goBack(self):
+        self.driver.back()
+
+        # refresh the page
+
+    @allure.step("Refresh page")
+    def refreshPage(self):
+        self.driver.refresh()
+
+    def allureStep(self, text_toPrint):
+        step_time = datetime.now().strftime("%H:%M:%S")
+        text = f"{text_toPrint} time:{step_time} "
+        with allure.step(text):
+            pass
