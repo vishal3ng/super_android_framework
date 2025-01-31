@@ -8,13 +8,14 @@ from allure_commons.types import AttachmentType
 
 # from appium import webdriver
 from src.page.LoginPage.login_page import Loginpage
+from src.page.Equity_page.EQ_NormalOrderPlacement import Equity_order
 from util.capabilities_suppliers import Backbone
 import subprocess
 import allure
 import pytest
-
+# import external
 from src.page.common import Common_file
-
+pytest.register_assert_rewrite('external')
 logging.basicConfig(filename='mobile.log', filemode='w', level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s', force=True)
 
@@ -34,7 +35,9 @@ def adb_devices():
     print(devices)
     return devices
 
-
+@pytest.fixture(autouse=True,scope="function")
+def take_screenshot():
+    print("take screenshot")
 @pytest.fixture(autouse=True,scope="function")
 def drivers(request,pytestconfig):
     if hasattr(pytestconfig, "workerinput"):
@@ -45,12 +48,13 @@ def drivers(request,pytestconfig):
     device_name = devices[worker_index]
     print("_____ Driver start _______")
     objbb=Backbone(device_name)
-    global  driver
+    global driver
     driver=objbb.driverFactory()
-    driver.implicitly_wait(40)
+    driver.implicitly_wait(200)
     request.cls.driver = driver
     request.cls.objloginpage=Loginpage(driver,device_name)
     request.cls.objCommon_file=Common_file(driver)
+    request.cls.objEquity_order=Equity_order(driver)
     yield driver
     driver.quit()
     print("________ Driver quit _______")

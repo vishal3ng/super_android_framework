@@ -12,16 +12,24 @@ import configparser
 from src.page.common import Common_file
 
 logger = logging.getLogger(__name__)
+
+
 class Loginpage(Common_file):
 
+
     def __init__(self, driver, device_name):
+        # super().__init__(driver)
+        # Loginpage.__init__(self)
         self.driver: WebDriver = driver
         self.objcommon = Common_file(driver)
-        self.wait = we(driver, 40)
+        self.wait = we(driver, 10)
         self.device_name = device_name
 
     id = ""
     password = ""
+
+    def onlydriver(self):
+        return self.driver
 
     def get_id_password(self):
         result=False
@@ -56,9 +64,10 @@ class Loginpage(Common_file):
         assert self.setValue(self.user_password, "User Password ",self.password)
         assert self.click_on(self.login_button,"Login Button")
         assert self.fill_otp()
-        self.wait.until(EC.visibility_of(self.get_webelemet(self.cancel_biometrics)))
+        # self.wait.until(EC.visibility_of(self.get_webelemet(self.cancel_biometrics)))
         self.click_on(self.cancel_biometrics,"Cancel Biometric pop-up")
         self.click_on(self.risk_disk_popup,"Accept risk disclose pop-up")
+        self.click_on(self.Homepage_1,"HomePage")
 
     # @allure.step("Fill OTP from recevied SMS ")
     def fill_otp(self):
@@ -68,7 +77,8 @@ class Loginpage(Common_file):
             print("notification bar open")
             self.wait.until(EC.visibility_of(self.driver.find_element(By.XPATH, self.xpathFor_OTP)))
             otp_msg = self.get_text(self.xpathFor_OTP, "text")[0:6]
-            # print(otp_msg)
+            self.allureStep(f"otp msg is : {otp_msg}")
+            print(otp_msg)
             self.click_on(self.clearOtpNotifications,"Clear notification ")
             self.setValue(self.fill_otpxpath,"OTP", otp_msg)
             result=True

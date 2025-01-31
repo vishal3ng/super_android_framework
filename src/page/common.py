@@ -1,19 +1,20 @@
 import time
 from datetime import datetime
-
+import pytest
 import allure
 from appium.webdriver.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 import logging
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait as we
+from selenium.webdriver.common.action_chains import ActionChains as action
 class Common_file:
     excelName = datetime.now().strftime("%d-%m-%Y")
     api_button = "(//android.view.View/android.widget.Button[@resource-id=''])[last()]"
     skip_button = "//android.view.View[@content-desc='Skip'] | //android.widget.ImageView[@content-desc='Get Started']"
     accept_alert = "//android.widget.Button[@resource-id='com.android.permissioncontroller:id/permission_allow_button']"
-    user_id = "//android.widget.ImageView[@text='User ID']"
-    user_password = "//android.widget.ImageView[@text='Password / PIN']"
+    user_id = '//android.view.View[@content-desc="User ID"]/following-sibling::android.widget.ImageView'
+    user_password = "//android.widget.EditText"
     login_button = "//android.widget.Button[@content-desc='Login']"
     last_apiOnpage = "//android.view.View[contains(@content-desc,'.com')][last()]"
     first_apiOnpage = "(//android.view.View[contains(@content-desc,'.com')])[2]"
@@ -21,6 +22,7 @@ class Common_file:
     apiOnpage = "//android.view.View[contains(@content-desc,'.com') or contains(@content-desc,'.net')]"
     cancel_biometrics = "//android.widget.Button[@content-desc='Cancel']"
     risk_disk_popup = '//android.widget.Button[@content-desc="Ok, Got it"]'
+    Homepage_1 = '//android.widget.ImageView[contains(@content-desc,"Home")]'
     api_Show_menu = '//android.widget.Button[@content-desc="Show menu"]'
     api_Delete = '//android.widget.Button[@content-desc="Delete"]'
     api_Yes = '//android.widget.Button[@content-desc="Yes"]'
@@ -30,7 +32,7 @@ class Common_file:
     search_bar = "//android.view.View[@content-desc='Search & add']"
     search_bar_set_value = "//android.widget.EditText[@text='Search Name or Symbol']"
     select_script_base = "//android.view.View[contains(@content-desc,'script') and contains(@content-desc,'exe')]"
-    fill_otpxpath = "//android.view.View[@content-desc='OTP']/following-sibling::android.widget.EditText"
+    fill_otpxpath = "//android.view.View[contains(@content-desc,'OTP')]/following-sibling::android.widget.EditText"
     order_actionxpath = "//android.widget.Button[@content-desc='action']"
     clearOtpNotifications = "//android.widget.ImageView[contains(@content-desc,'Clear all notifications')] | //android.widget.Button[contains(@content-desc,'Clear all notifications')] | //android.widget.TextView[contains(@content-desc,'Clear,Button')]"
     placement_exchange = "//android.view.View[contains(@content-desc,'exe')]"
@@ -54,6 +56,7 @@ class Common_file:
     def __init__(self,driver):
         self.driver:WebDriver=driver
         self.wait=we(driver,40)
+        self.action = action(driver,10)
 
     def click_on(self,xpath,element_name=None):
         result = False
@@ -82,6 +85,10 @@ class Common_file:
         except Exception as e:
             self.allureStep(f" Unable to click and fill text at {element_name} {xpath} with value {value} error msg {e}")
         return result
+    def scrollup_downBypixel(self,bypoint):
+        # self.action.
+        pass
+
 
     def get_webelemet(self, xpath):
         global wel

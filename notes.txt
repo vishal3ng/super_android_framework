@@ -11,3 +11,6 @@ ro.serialno - Serial number
 
 adb uninstall io.appium.uiautomator2.server   # for stock-code hang up error
 adb uninstall io.appium.uiautomator2.server.test
+
+to know all pakages : adb shell pm list packages -f
+to kno app activity : pm list packages | grep -E "icic"
