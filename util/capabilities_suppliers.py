@@ -18,8 +18,6 @@ class Backbone:
         "platformName": "Android",
         "newCommandTimeout": 200,
         "appPackage": "com.icicidirect.idirectsuper",
-        # "appPackage": "com.cricbuzz.android",
-        # "appActivity": "com.cricbuzz.android.lithium.app.view.activity.NyitoActivity",
         "appActivity": "com.icicidirect.idirectsuper.MainActivity",
         "automationName": "UiAutomator2",
         # "automationName": "espresso",

@@ -18,6 +18,7 @@ class Test_equity(basepage):
         logger.info("from first test ")
         self.objloginpage.login()
         time.sleep(12)
+
         print("hello v1")
         assert False, "all pass"
         print("hello v2")

@@ -1,0 +1,6 @@
+list of upload
+curl -u "vidyasagargrandh_nHzOBs:XYDpRqhcg7Qquk8b8CSD" -X GET "https://api-cloud.browserstack.com/app-live/recent_group_apps"
+
+
+upload
+curl -u "vidyasagargrandh_nHzOBs:XYDpRqhcg7Qquk8b8CSD" -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "data={\"url\": \"https://www.browserstack.com/app-live/sample-apps/android/WikipediaSample.apk\"}"
